@@ -5,25 +5,20 @@ MCU: Arduino Uno
 Created using QtCreator
 */
 
+#include "linefollowerrobot.h"
 #include <Arduino.h>
 
-#define LED_PIN 13
-#define DELAY_MS 500
+LineFollowerRobot lineFollower;
 
 void setup()
 {
-    pinMode(LED_PIN, OUTPUT);
     Serial.begin(115200);
+    lineFollower.init();
 }
 
 void loop()
 {
-    Serial.println("Blink led!");
-
-    digitalWrite(LED_PIN, HIGH);
-    delay(DELAY_MS);
-    digitalWrite(LED_PIN, LOW);
-    delay(DELAY_MS);
+    lineFollower.moveForward(0);
 }
 
 int main()

@@ -11,7 +11,7 @@ BOARD_SUB	=
 # To know what MCU you can use check board.txt on end of this file
 #MCU		#atmega328p
 #F_CPU		= 16000000
-MONITOR_PORT = /dev/ttyACM0
+MONITOR_PORT = /dev/ttyACM1
 
 # Avrdude code for programming
 AVRDUDE		= $(ARDUINO_DIR)/hardware/tools/avr/bin/avrdude
