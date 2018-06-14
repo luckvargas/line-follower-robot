@@ -14,7 +14,9 @@ SOURCES += main.cpp \
 HEADERS += \
     linefollowerrobot.h \
     motorcontroller.h \
-    linesensor.h
+    linesensor.h \
+    util/pair.h \
+    util/util.h
 
 DISTFILES += \
     Makefile
