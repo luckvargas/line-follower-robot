@@ -4,9 +4,15 @@
 #
 #-------------------------------------------------
 
-SOURCES += main.cpp 
+SOURCES += main.cpp \ 
+    linefollowerrobot.cpp \
+    motorcontroller.cpp \
+    linesensor.cpp
 
-HEADERS += 
+HEADERS += \ 
+    linefollowerrobot.h \
+    motorcontroller.h \
+    linesensor.h
 
 DISTFILES += \
     Makefile
