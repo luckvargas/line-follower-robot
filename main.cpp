@@ -19,6 +19,7 @@ void setup()
 void loop()
 {
     lineFollower.moveForward(0);
+    lineFollower.readSensors();
 }
 
 int main()

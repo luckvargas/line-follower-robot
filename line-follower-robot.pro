@@ -16,7 +16,8 @@ HEADERS += \
     motorcontroller.h \
     linesensor.h \
     util/pair.h \
-    util/util.h
+    util/util.h \
+    util/streaming.h
 
 DISTFILES += \
     Makefile

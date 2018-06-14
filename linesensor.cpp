@@ -1,6 +1,17 @@
 #include "linesensor.h"
+#include "util/util.h"
 
 LineSensor::LineSensor()
+    : m_qtrSensors(sensorPins, NUM_SENSORS, 2500)
 {
+}
 
+void LineSensor::read()
+{
+    m_qtrSensors.read(m_sensorValues);
+
+    for (int i = 0; i < NUM_SENSORS; i++) {
+        Serial << m_sensorValues[i] << "\t";
+    }
+    Serial << endl;
 }

@@ -14,6 +14,7 @@ public:
 
     void init();
     void moveForward(const uint32_t& speed);
+    void readSensors();
 
 private:
     MotorController* m_motorController;
