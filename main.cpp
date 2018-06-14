@@ -6,9 +6,11 @@ Created using QtCreator
 */
 
 #include "linefollowerrobot.h"
+#include "util/util.h"
 #include <Arduino.h>
 
 LineFollowerRobot lineFollower;
+ElapsedTimer timer;
 
 void setup()
 {
@@ -18,8 +20,10 @@ void setup()
 
 void loop()
 {
+    timer.start();
     lineFollower.moveForward(0);
     lineFollower.readSensors();
+    Serial << timer.elapsed() << endl;
 }
 
 int main()

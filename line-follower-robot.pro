@@ -17,7 +17,8 @@ HEADERS += \
     linesensor.h \
     util/pair.h \
     util/util.h \
-    util/streaming.h
+    util/streaming.h \
+    util/elapsedtimer.h
 
 DISTFILES += \
     Makefile
