@@ -1,9 +1,9 @@
 #ifndef LINESENSOR_H
 #define LINESENSOR_H
 
+#include <QTRSensors.h>
 
-class LineSensor
-{
+class LineSensor {
 public:
     LineSensor();
 };
