@@ -1,4 +1,6 @@
 #include "linefollowerrobot.h"
+#include "linesensor.h"
+#include "motordriver.h"
 
 LineFollowerRobot::LineFollowerRobot()
 {
@@ -6,13 +8,13 @@ LineFollowerRobot::LineFollowerRobot()
 
 void LineFollowerRobot::init()
 {
-    m_motorController = new MotorController();
+    m_motorDriver = new MotorDriver();
     m_lineSensor = new LineSensor();
 }
 
 void LineFollowerRobot::moveForward(const uint32_t& speed)
 {
-    m_motorController->setSpeed(speed, speed);
+    m_motorDriver->setSpeed(speed, speed);
 }
 
 void LineFollowerRobot::readSensors()

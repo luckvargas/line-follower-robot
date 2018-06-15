@@ -8,17 +8,17 @@ HOME=../../..
 
 SOURCES += main.cpp \ 
     linefollowerrobot.cpp \
-    motorcontroller.cpp \
-    linesensor.cpp
+    linesensor.cpp \
+    motordriver.cpp
 
 HEADERS += \
     linefollowerrobot.h \
-    motorcontroller.h \
     linesensor.h \
     util/pair.h \
     util/util.h \
     util/streaming.h \
-    util/elapsedtimer.h
+    util/elapsedtimer.h \
+    motordriver.h
 
 DISTFILES += \
     Makefile

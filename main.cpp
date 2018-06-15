@@ -23,7 +23,7 @@ void loop()
     timer.start();
     lineFollower.moveForward(0);
     lineFollower.readSensors();
-    Serial << timer.elapsed() << endl;
+    // Serial << timer.elapsed() << endl;
 }
 
 int main()

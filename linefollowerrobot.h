@@ -1,12 +1,10 @@
 #ifndef LINEFOLLOWERROBOT_H
 #define LINEFOLLOWERROBOT_H
 
-#include "linesensor.h"
-#include "motorcontroller.h"
 #include <Arduino.h>
 
 class LineSensor;
-class MotorController;
+class MotorDriver;
 
 class LineFollowerRobot {
 public:
@@ -17,7 +15,7 @@ public:
     void readSensors();
 
 private:
-    MotorController* m_motorController;
+    MotorDriver* m_motorDriver;
     LineSensor* m_lineSensor;
 };
 

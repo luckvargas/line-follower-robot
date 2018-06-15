@@ -5,9 +5,9 @@
 #include <RoboClaw.h>
 #include <SoftwareSerial.h>
 
-class MotorController {
+class MotorDriver {
 public:
-    MotorController();
+    MotorDriver();
 
     void setSpeed(const uint32_t& leftMotorSpeed, const uint32_t& rightMotorSpeed);
 

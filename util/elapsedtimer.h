@@ -7,12 +7,12 @@ class ElapsedTimer {
 public:
     ElapsedTimer() {}
 
-    void ElapsedTimer::start()
+    void start()
     {
         m_lastTime = millis();
     }
 
-    long ElapsedTimer::elapsed()
+    long elapsed()
     {
         return millis() - m_lastTime;
     }
