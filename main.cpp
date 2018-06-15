@@ -21,9 +21,8 @@ void setup()
 void loop()
 {
     timer.start();
-    lineFollower.moveForward(0);
-    lineFollower.readSensors();
-    // Serial << timer.elapsed() << endl;
+    lineFollower.follow();
+    Serial << timer.elapsed() << endl;
 }
 
 int main()

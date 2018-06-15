@@ -5,6 +5,7 @@
 
 class LineSensor;
 class MotorDriver;
+class FuzzyController;
 
 class LineFollowerRobot {
 public:
@@ -13,10 +14,18 @@ public:
     void init();
     void moveForward(const uint32_t& speed);
     void readSensors();
+    void follow();
+
+    void setLinearSpeed(int linearSpeed);
 
 private:
     MotorDriver* m_motorDriver;
     LineSensor* m_lineSensor;
+    FuzzyController* m_controller;
+
+    float m_input;
+    float m_output;
+    int m_linearSpeed;
 };
 
 #endif // LINEFOLLOWERROBOT_H

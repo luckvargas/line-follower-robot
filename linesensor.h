@@ -7,11 +7,12 @@
 class LineSensor {
 public:
     LineSensor();
-    void read();
+    int read();
 
 private:
     QTRSensorsRC m_qtrSensors;
     unsigned int m_sensorValues[NUM_SENSORS];
+
     ///< Constants
     unsigned char sensorPins[NUM_SENSORS] = { 2, 3, 4, 5, 6, 7 };
 };

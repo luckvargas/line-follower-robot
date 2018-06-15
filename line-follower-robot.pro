@@ -9,7 +9,8 @@ HOME=../../..
 SOURCES += main.cpp \ 
     linefollowerrobot.cpp \
     linesensor.cpp \
-    motordriver.cpp
+    motordriver.cpp \
+    fuzzycontroller.cpp
 
 HEADERS += \
     linefollowerrobot.h \
@@ -18,7 +19,8 @@ HEADERS += \
     util/util.h \
     util/streaming.h \
     util/elapsedtimer.h \
-    motordriver.h
+    motordriver.h \
+    fuzzycontroller.h
 
 DISTFILES += \
     Makefile
