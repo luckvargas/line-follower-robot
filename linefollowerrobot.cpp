@@ -27,7 +27,7 @@ void LineFollowerRobot::readSensors()
 void LineFollowerRobot::follow()
 {
     m_input = m_lineSensor->read();
-    m_output = m_controller->calculate(m_input);
+    m_output = m_controller->evaluate(m_input);
 
     m_motorDriver->setSpeed(m_linearSpeed + m_output, m_linearSpeed - m_output);
 }
