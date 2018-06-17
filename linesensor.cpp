@@ -17,3 +17,8 @@ int LineSensor::read()
 
     return position;
 }
+
+void LineSensor::calibrate()
+{
+    m_qtrSensors.calibrate();
+}

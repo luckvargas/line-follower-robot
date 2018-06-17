@@ -2,7 +2,7 @@
 ARDUINO_DIR     = $(HOME)/arduino-1.8.5
 AVR_TOOLS_DIR	= $(HOME)/arduino-1.8.5/hardware/tools/avr
 TARGET          = output
-ARDUINO_LIBS    = RoboClaw SoftwareSerial QTRSensors Fuzzy
+ARDUINO_LIBS    = StandardCplusplus Button RoboClaw SoftwareSerial QTRSensors Fuzzy
 
 
 BOARD_TAG	=
@@ -11,7 +11,7 @@ BOARD_SUB	=
 # To know what MCU you can use check board.txt on end of this file
 #MCU		#atmega328p
 #F_CPU		= 16000000
-MONITOR_PORT = /dev/ttyACM1
+MONITOR_PORT = /dev/ttyACM0
 
 # Avrdude code for programming
 AVRDUDE		= $(ARDUINO_DIR)/hardware/tools/avr/bin/avrdude

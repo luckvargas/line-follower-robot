@@ -51,6 +51,6 @@ INCLUDEPATH = $$HOME/arduino-1.8.5/hardware/arduino/avr/cores/arduino \
 ## 3rdParty Arduino Libraries
 INCLUDEPATH += $$HOME/Arduino/libraries/QTRSensors \
 $$HOME/Arduino/libraries/RoboClaw \
-$$HOME/Arduino/libraries/Fuzzy
-
-
+$$HOME/Arduino/libraries/Fuzzy \
+$$HOME/Arduino/libraries/Button \
+$$HOME/Arduino/libraries/StandardCplusplus

@@ -8,6 +8,7 @@ class LineSensor {
 public:
     LineSensor();
     int read();
+    void calibrate();
 
 private:
     QTRSensorsRC m_qtrSensors;
