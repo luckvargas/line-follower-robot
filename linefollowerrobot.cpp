@@ -5,6 +5,7 @@
 #include <Button.h>
 
 LineFollowerRobot::LineFollowerRobot()
+    : m_lastEncoderRead(0, 0)
 {
 }
 
@@ -13,7 +14,6 @@ void LineFollowerRobot::calibrate()
     uint32_t calibrationSpeed = 1000;
     long calibrationTime = 2000;
 
-    delay(1000);
     // Rotate robot and calibrate
     m_motorDriver->setSpeed(calibrationSpeed, -calibrationSpeed);
     m_timer.start();
@@ -29,6 +29,15 @@ void LineFollowerRobot::calibrate()
     }
 }
 
+void LineFollowerRobot::waitButtonPress()
+{
+    Serial << "Waiting for button press..." << endl;
+    while (!m_startButton->isPressed()) {
+        m_led->blink(100);
+    }
+    delay(1000);
+}
+
 void LineFollowerRobot::init()
 {
     m_motorDriver = new MotorDriver();
@@ -37,10 +46,7 @@ void LineFollowerRobot::init()
     m_startButton = new Button(startButtonPin, PULLUP);
     m_led = new LED(indicatorLedPin);
 
-    Serial << "Waiting for button press..." << endl;
-    while (!m_startButton->isPressed()) {
-        m_led->blink(100);
-    }
+    waitButtonPress();
 
     Serial << "Start calibration..." << endl;
     calibrate();
@@ -51,9 +57,24 @@ void LineFollowerRobot::moveForward(const uint32_t& speed)
     m_motorDriver->setSpeed(speed, speed);
 }
 
-void LineFollowerRobot::readSensors()
+void LineFollowerRobot::readLine()
 {
     m_lineSensor->read();
+}
+
+void LineFollowerRobot::readOdometry()
+{
+    Pair<uint32_t, uint32_t> encoderRead = m_motorDriver->getEncoders();
+
+    uint32_t deltaLeftDistance = (encoderRead.first() - m_lastEncoderRead.first()) / countsPerCentimeter;
+    uint32_t deltaRightDistance = (encoderRead.second() - m_lastEncoderRead.second()) / countsPerCentimeter;
+
+    uint32_t distance = (deltaLeftDistance + deltaRightDistance) / 2.0;
+
+    // Update robot position
+    m_lastPosition.y += distance * cos(m_lastPosition.theta);
+    m_lastPosition.x += distance * sin(m_lastPosition.theta);
+    m_lastPosition.theta += (deltaLeftDistance - deltaRightDistance) / distanceBetweenWheels;
 }
 
 void LineFollowerRobot::follow()

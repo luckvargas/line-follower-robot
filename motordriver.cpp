@@ -15,9 +15,25 @@ void MotorDriver::setSpeed(const uint32_t& leftMotorSpeed, const uint32_t& right
 
 Pair<uint32_t, uint32_t> MotorDriver::getSpeed()
 {
-    uint32_t leftMotorSpeed = m_roboclaw.ReadSpeedM1(m_address);
-    uint32_t rightMotorSpeed = m_roboclaw.ReadSpeedM2(m_address);
+    uint8_t status1, status2;
+    bool valid1, valid2;
 
-    Pair<uint32_t, uint32_t> speed(leftMotorSpeed, rightMotorSpeed);
+    uint32_t leftMotorSpeed = m_roboclaw.ReadSpeedM1(m_address, &status1, &valid1);
+    uint32_t rightMotorSpeed = m_roboclaw.ReadSpeedM2(m_address, &status2, &valid2);
+
+    Pair<uint32_t, uint32_t> speed((valid1) ? leftMotorSpeed : -1, (valid2) ? rightMotorSpeed : -1);
     return speed;
+}
+
+Pair<uint32_t, uint32_t> MotorDriver::getEncoders()
+{
+
+    uint8_t status1, status2;
+    bool valid1, valid2;
+
+    uint32_t leftMotorEncoder = m_roboclaw.ReadEncM1(m_address, &status1, &valid1);
+    uint32_t rightMotorEncoder = m_roboclaw.ReadEncM2(m_address, &status2, &valid2);
+
+    Pair<uint32_t, uint32_t> encoders((valid1) ? leftMotorEncoder : -1, (valid2) ? rightMotorEncoder : -1);
+    return encoders;
 }

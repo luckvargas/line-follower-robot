@@ -12,6 +12,7 @@ public:
     void setSpeed(const uint32_t& leftMotorSpeed, const uint32_t& rightMotorSpeed);
 
     Pair<uint32_t, uint32_t> getSpeed();
+    Pair<uint32_t, uint32_t> getEncoders();
 
 private:
     uint32_t leftMotorSpeed;
