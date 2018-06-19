@@ -2,7 +2,7 @@
 ARDUINO_DIR     = $(HOME)/arduino-1.8.5
 AVR_TOOLS_DIR	= $(HOME)/arduino-1.8.5/hardware/tools/avr
 TARGET          = output
-ARDUINO_LIBS    = StandardCplusplus Button RoboClaw SoftwareSerial QTRSensors Fuzzy
+ARDUINO_LIBS    = StandardCplusplus Button LED RoboClaw SoftwareSerial QTRSensors Fuzzy
 
 
 BOARD_TAG	=

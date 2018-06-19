@@ -5,15 +5,15 @@
 #include <Button.h>
 
 LineFollowerRobot::LineFollowerRobot()
-    : m_startButton(new Button(startButtonPin, PULLUP))
 {
 }
 
 void LineFollowerRobot::calibrate()
 {
-    uint32_t calibrationSpeed = 30;
+    uint32_t calibrationSpeed = 1000;
     long calibrationTime = 2000;
 
+    delay(1000);
     // Rotate robot and calibrate
     m_motorDriver->setSpeed(calibrationSpeed, -calibrationSpeed);
     m_timer.start();
@@ -34,11 +34,15 @@ void LineFollowerRobot::init()
     m_motorDriver = new MotorDriver();
     m_lineSensor = new LineSensor();
     m_controller = new FuzzyController();
+    m_startButton = new Button(startButtonPin, PULLUP);
+    m_led = new LED(indicatorLedPin);
 
+    Serial << "Waiting for button press..." << endl;
     while (!m_startButton->isPressed()) {
-        delay(100);
+        m_led->blink(100);
     }
 
+    Serial << "Start calibration..." << endl;
     calibrate();
 }
 

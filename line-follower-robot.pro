@@ -53,4 +53,5 @@ INCLUDEPATH += $$HOME/Arduino/libraries/QTRSensors \
 $$HOME/Arduino/libraries/RoboClaw \
 $$HOME/Arduino/libraries/Fuzzy \
 $$HOME/Arduino/libraries/Button \
+$$HOME/Arduino/libraries/LED \
 $$HOME/Arduino/libraries/StandardCplusplus

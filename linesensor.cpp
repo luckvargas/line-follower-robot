@@ -10,10 +10,12 @@ int LineSensor::read()
 {
     int position = m_qtrSensors.readLine(m_sensorValues);
 
-    for (int i = 0; i < NUM_SENSORS; i++) {
-        Serial << m_sensorValues[i] << "\t";
-    }
-    Serial << endl;
+    //    if (Serial) {
+    //        for (int i = 0; i < NUM_SENSORS; i++) {
+    //            Serial << m_sensorValues[i] << "\t";
+    //        }
+    //        Serial << endl;
+    //    }
 
     return position;
 }
