@@ -5,6 +5,9 @@
 #include <Arduino.h>
 #include <LED.h>
 
+#include <StandardCplusplus.h>
+#include <vector>
+
 class Button;
 class LineSensor;
 class MotorDriver;
@@ -23,6 +26,19 @@ struct Position {
     float x, y, theta = 0;
 };
 
+struct LaneSegment {
+    LaneSegment() {}
+
+    LaneSegment(float length, float radius)
+    {
+        this->length = length;
+        this->radius = radius;
+    }
+
+    float length;
+    float radius;
+};
+
 class LineFollowerRobot {
 public:
     LineFollowerRobot();
@@ -35,15 +51,24 @@ public:
 
     void readOdometry();
 
+    void scan();
+
     void follow();
 
-    void setLinearSpeed(int linearSpeed);
+    void follow(float speed);
+
+    void setLinearSpeed(float linearSpeed);
 
     void calibrate();
 
-private:
     void waitButtonPress();
 
+    void stop();
+
+private:
+    bool closeToOrigin();
+
+    ///< Periferics
     MotorDriver* m_motorDriver;
     LineSensor* m_lineSensor;
     FuzzyController* m_controller;
@@ -51,16 +76,24 @@ private:
     LED* m_led;
     ElapsedTimer m_timer;
 
+    ///< Control variables
     float m_input;
     float m_output;
-    int m_linearSpeed;
 
+    ///< Speed parameters
+    int m_maxSpeed;
+    float m_linearSpeed;
+
+    ///< Odometry and Mapping
+    std::vector<LaneSegment> m_lane;
     Position m_lastPosition;
     Pair<uint32_t, uint32_t> m_lastEncoderRead;
 
+    ///< Constraints
     const uint8_t startButtonPin = 12;
     const uint8_t indicatorLedPin = 13;
     const float distanceBetweenWheels = 100.0; // Distance between wheels - 10cm
     const float countsPerCentimeter = 100.0;
+    const float scanSpeed = 1000.0;
 };
 #endif // LINEFOLLOWERROBOT_H

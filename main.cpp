@@ -16,6 +16,12 @@ void setup()
 {
     Serial.begin(115200);
     lineFollower.init();
+
+    Serial << "Press button to start..." << endl;
+    lineFollower.waitButtonPress();
+    Serial << "Press button to start..." << endl;
+
+    lineFollower.calibrate();
 }
 
 void loop()

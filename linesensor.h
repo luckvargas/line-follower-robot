@@ -7,7 +7,7 @@
 class LineSensor {
 public:
     LineSensor();
-    int read();
+    int read(bool print);
     void calibrate();
 
 private:
