@@ -5,7 +5,9 @@
 #include <Arduino.h>
 #include <LED.h>
 
+#ifdef __AVR__
 #include <StandardCplusplus.h>
+#endif
 #include <vector>
 
 class Button;
@@ -73,7 +75,6 @@ private:
     LineSensor* m_lineSensor;
     FuzzyController* m_controller;
     Button* m_startButton;
-    LED* m_led;
     ElapsedTimer m_timer;
 
     ///< Control variables

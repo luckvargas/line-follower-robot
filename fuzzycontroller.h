@@ -1,7 +1,7 @@
 #ifndef FUZZYCONTROLLER_H
 #define FUZZYCONTROLLER_H
 
-#include <Fuzzy.h>
+#include "Fuzzy.h"
 
 class FuzzyController {
 public:

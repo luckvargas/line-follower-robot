@@ -3,7 +3,10 @@
 
 #include "util/util.h"
 #include <RoboClaw.h>
+
+#ifdef __AVR__
 #include <SoftwareSerial.h>
+#endif
 
 class MotorDriver {
 public:
@@ -17,7 +20,12 @@ public:
 private:
     uint32_t leftMotorSpeed;
 
+#ifdef __AVR__
     SoftwareSerial m_serial;
+#else
+    HardwareSerial m_serial;
+#endif
+
     RoboClaw m_roboclaw;
 
     ///< Constants
@@ -26,6 +34,7 @@ private:
     const uint32_t m_comunicationTimeout = 1000;
     const uint32_t m_boudrate = 115200;
     const uint8_t m_address = 0x80;
+    const uint8_t m_hardwareSerial = 2;
 };
 
 #endif // MOTORCONTROLLER_H

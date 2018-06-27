@@ -35,7 +35,6 @@ void LineFollowerRobot::waitButtonPress()
 {
     Serial << "Waiting for button press..." << endl;
     while (!m_startButton->isPressed()) {
-        m_led->blink(100);
     }
     delay(1000);
 }
@@ -46,7 +45,7 @@ void LineFollowerRobot::init()
     m_lineSensor = new LineSensor();
     m_controller = new FuzzyController();
     m_startButton = new Button(startButtonPin, PULLUP);
-    m_led = new LED(indicatorLedPin);
+    //    m_led = new LED(indicatorLedPin);
 }
 
 void LineFollowerRobot::moveForward(const uint32_t& speed)

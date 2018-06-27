@@ -1,7 +1,11 @@
 #include "motordriver.h"
 
 MotorDriver::MotorDriver()
+#ifdef __AVR__
     : m_serial(m_receivePin, m_transmitPin)
+#else
+    : m_serial(m_hardwareSerial)
+#endif
     , m_roboclaw(&m_serial, m_comunicationTimeout)
 {
     m_roboclaw.begin(m_boudrate);

@@ -6,7 +6,7 @@
 
 HOME=../../..
 
-SOURCES += main.cpp \ 
+SOURCES += line-follower-robot.ino \
     linefollowerrobot.cpp \
     linesensor.cpp \
     motordriver.cpp \
