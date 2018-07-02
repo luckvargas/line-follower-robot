@@ -36,7 +36,11 @@ private:
     const uint32_t m_comunicationTimeout = 1000;
     const uint32_t m_boudrate = 115200;
     const uint8_t m_address = 0x80;
+
+    ///< HardwareSerial Config
     const uint8_t m_hardwareSerial = 2;
+    const uint8_t m_hserialRxPin = 16;
+    const uint8_t m_hserialTxPin = 17;
 };
 
 #endif // MOTORCONTROLLER_H

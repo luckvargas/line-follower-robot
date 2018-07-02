@@ -8,7 +8,11 @@ MotorDriver::MotorDriver()
 #endif
     , m_roboclaw(&m_serial, m_comunicationTimeout)
 {
-    m_roboclaw.begin(m_boudrate);
+#ifdef __AVR__
+    m_serial.begin(m_boudrate, SERIAL_8N1, m_hserialRxPin, m_hserialTxPin);
+#else
+    m_serial.begin(m_boudrate);
+#endif
 }
 
 void MotorDriver::setSpeed(const uint32_t& leftMotorSpeed, const uint32_t& rightMotorSpeed)
