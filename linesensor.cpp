@@ -2,13 +2,13 @@
 #include "util/util.h"
 
 LineSensor::LineSensor()
-    : m_qtrSensors(sensorPins, NUM_SENSORS, 2500)
 {
+    m_qtrSensors = new QTRSensorsRC(sensorPins, NUM_SENSORS, TIMEOUT, EMITTER_PIN);
 }
 
 int LineSensor::read(bool print)
 {
-    int position = m_qtrSensors.readLine(m_sensorValues);
+    int position = m_qtrSensors->readLine(m_sensorValues);
 
     if (print) {
         for (int i = 0; i < NUM_SENSORS; i++) {
@@ -22,5 +22,5 @@ int LineSensor::read(bool print)
 
 void LineSensor::calibrate()
 {
-    m_qtrSensors.calibrate();
+    m_qtrSensors->calibrate();
 }

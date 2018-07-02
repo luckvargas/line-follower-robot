@@ -6,9 +6,11 @@
 
 #ifdef __AVR__
 #include <SoftwareSerial.h>
+else
+#include <HardwareSerial.h>
 #endif
 
-class MotorDriver {
+    class MotorDriver {
 public:
     MotorDriver();
 

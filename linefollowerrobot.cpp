@@ -55,7 +55,7 @@ void LineFollowerRobot::moveForward(const uint32_t& speed)
 
 void LineFollowerRobot::readLine()
 {
-    m_lineSensor->read(false);
+    m_lineSensor->read(true);
 }
 
 void LineFollowerRobot::readOdometry()
