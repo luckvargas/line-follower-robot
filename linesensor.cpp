@@ -15,14 +15,13 @@ float LineSensor::read(bool print)
         position = this->readLine();
     }
 
-    //    if (print) {
-    //        for (int i = 0; i < NUM_SENSORS; i++) {
-    //            Serial << m_sensorValues[i] << "\t";
-    //        }
-    //        Serial << endl;
-    //    }
+    if (print) {
+        for (int i = 0; i < NUM_SENSORS; i++) {
+            Serial << m_sensorValues[i] << "\t";
+        }
+        Serial << " - Position: " << position << endl;
+    }
 
-    Serial << position << endl;
     return position;
 }
 

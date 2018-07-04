@@ -9,16 +9,16 @@ MotorDriver::MotorDriver()
     , m_roboclaw(&m_serial, m_comunicationTimeout)
 {
 #ifdef __AVR__
-    m_serial.begin(m_boudrate, SERIAL_8N1, m_hserialRxPin, m_hserialTxPin);
-#else
     m_serial.begin(m_boudrate);
+#else
+    m_serial.begin(m_boudrate, SERIAL_8N1, m_hserialRxPin, m_hserialTxPin);
 #endif
 }
 
 void MotorDriver::setSpeed(const uint32_t& leftMotorSpeed, const uint32_t& rightMotorSpeed)
 {
     m_roboclaw.SpeedM1(m_address, leftMotorSpeed);
-    m_roboclaw.SpeedM2(m_address, -rightMotorSpeed);
+    m_roboclaw.SpeedM2(m_address, rightMotorSpeed);
 }
 
 Pair<uint32_t, uint32_t> MotorDriver::getSpeed()

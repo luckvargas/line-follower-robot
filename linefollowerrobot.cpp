@@ -114,7 +114,12 @@ void LineFollowerRobot::follow(float speed)
     m_input = m_lineSensor->read(false);
     m_output = m_controller->evaluate(m_input);
 
-    m_motorDriver->setSpeed(speed + m_output, m_linearSpeed - m_output);
+    int leftMotor = m_linearSpeed * (1 + m_output / 100);
+    int rightMotor = m_linearSpeed * (1 - m_output / 100);
+    m_motorDriver->setSpeed(leftMotor, rightMotor);
+
+    Serial << "Input: " << m_input << "\t output: " << m_output << "\t Left: "
+           << leftMotor << "\t Right: " << rightMotor << endl;
 }
 
 void LineFollowerRobot::stop()

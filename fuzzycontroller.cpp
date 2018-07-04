@@ -36,13 +36,13 @@ void FuzzyController::setup()
     // Setting FuzzyOutput direction
     FuzzyOutput* direction = new FuzzyOutput(1);
 
-    FuzzySet* left = new FuzzySet(-50, -50, -50, 0);
+    FuzzySet* left = new FuzzySet(-100, -100, -100, 0);
     direction->addFuzzySet(left);
 
-    FuzzySet* forward = new FuzzySet(-50, 0, 0, 50);
+    FuzzySet* forward = new FuzzySet(-100, 0, 0, 100);
     direction->addFuzzySet(forward);
 
-    FuzzySet* right = new FuzzySet(0, 50, 50, 50);
+    FuzzySet* right = new FuzzySet(0, 100, 100, 100);
     direction->addFuzzySet(right);
 
     m_fuzzy.addFuzzyOutput(direction);

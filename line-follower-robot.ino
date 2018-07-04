@@ -27,8 +27,8 @@ void setup()
 void loop()
 {
     timer.start();
-    //lineFollower.follow();
-    lineFollower.readLine();
+    lineFollower.follow();
+    //lineFollower.readLine();
     //Serial << timer.elapsed() << endl;
 }
 
