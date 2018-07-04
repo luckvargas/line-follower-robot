@@ -77,13 +77,16 @@ private:
     Button* m_startButton;
     ElapsedTimer m_timer;
 
+    ///< State variables
+    bool m_calibrated;
+
     ///< Control variables
     float m_input;
     float m_output;
 
     ///< Speed parameters
     int m_maxSpeed;
-    float m_linearSpeed;
+    float m_linearSpeed = 1200;
 
     ///< Odometry and Mapping
     std::vector<LaneSegment> m_lane;

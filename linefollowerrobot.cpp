@@ -29,6 +29,8 @@ void LineFollowerRobot::calibrate()
     while (m_timer.elapsed() < calibrationTime) {
         m_lineSensor->calibrate();
     }
+
+    m_calibrated = true;
 }
 
 void LineFollowerRobot::waitButtonPress()
