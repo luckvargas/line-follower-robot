@@ -18,18 +18,17 @@ void setup()
     lineFollower.init();
 
     Serial << "Press button to start..." << endl;
-    // lineFollower.waitButtonPress();
-    Serial << "Press button to start..." << endl;
-
-    //lineFollower.calibrate();
+    lineFollower.waitButtonPress();
+    lineFollower.calibrate();
+    delay(2000);
 }
 
 void loop()
 {
-    timer.start();
+    //timer.start();
     lineFollower.follow();
     //lineFollower.readLine();
-    //Serial << timer.elapsed() << endl;
+    //Serial << "delta time: " << timer.elapsed() << endl;
 }
 
 int main()

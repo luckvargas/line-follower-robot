@@ -10,7 +10,8 @@ float LineSensor::read(bool print)
 {
     float position = 0;
     if (m_calibrated) {
-        position = m_qtrSensors->readLine(m_sensorValues);
+        position = m_qtrSensors->readLine(m_sensorValues, QTR_EMITTERS_ON, WHITE_LINE);
+        position = map(position, 0, (NUM_SENSORS - 1) * 1000, -10, 10);
     } else {
         position = this->readLine();
     }
@@ -46,4 +47,13 @@ float LineSensor::readLine()
     position = (position / (TIMEOUT * (NUM_SENSORS - 1) / 2)) * 10;
 
     return position;
+}
+
+float LineSensor::map(float x,
+    float in_min,
+    float in_max,
+    float out_min,
+    float out_max)
+{
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }

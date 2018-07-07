@@ -11,7 +11,8 @@ ifeq ($(PLATFORM), esp32)
     LIBS = $(ARDUINO_LIBS_DIR)/Button \
         $(ARDUINO_LIBS_DIR)/Fuzzy \
         $(ARDUINO_LIBS_DIR)/RoboClaw \
-        $(ARDUINO_LIBS_DIR)/QTRSensors
+        $(ARDUINO_LIBS_DIR)/QTRSensors \
+        $(ARDUINO_LIBS_DIR)/PID
 
     include $(HOME)/makeEspArduino/makeEspArduino.mk
 else

@@ -1,4 +1,6 @@
 #include "linefollowerrobot.h"
+#include "PID_v1.h"
+#include "config.h"
 #include "fuzzycontroller.h"
 #include "linesensor.h"
 #include "motordriver.h"
@@ -13,8 +15,8 @@ LineFollowerRobot::LineFollowerRobot()
 
 void LineFollowerRobot::calibrate()
 {
-    uint32_t calibrationSpeed = 1000;
-    long calibrationTime = 2000;
+    uint32_t calibrationSpeed = 500;
+    long calibrationTime = 1500;
 
     // Rotate robot and calibrate
     m_motorDriver->setSpeed(calibrationSpeed, -calibrationSpeed);
@@ -23,31 +25,43 @@ void LineFollowerRobot::calibrate()
         m_lineSensor->calibrate();
     }
 
-    // Rotate robot to other direction
+    // Rotate robot to10 other direction
     m_motorDriver->setSpeed(-calibrationSpeed, calibrationSpeed);
     m_timer.start();
     while (m_timer.elapsed() < calibrationTime) {
         m_lineSensor->calibrate();
     }
+    m_motorDriver->setSpeed(0, 0);
 
     m_calibrated = true;
 }
 
 void LineFollowerRobot::waitButtonPress()
 {
-    Serial << "Waiting for button press..." << endl;
-    while (!m_startButton->isPressed()) {
+    Serial << "Waiting for button press... " << !digitalRead(19) << endl;
+    while (digitalRead(startButtonPin)) {
+        //        digitalWrite(indicatorLedPin, LOW);
+        //        delay(100);
+        //        digitalWrite(indicatorLedPin, HIGH);
+        //        delay(100);
+        // Serial << "APERTA PORRA: " << digitalRead(startButtonPin) << endl;
     }
-    delay(1000);
+    delay(2000);
 }
 
 void LineFollowerRobot::init()
 {
     m_motorDriver = new MotorDriver();
     m_lineSensor = new LineSensor();
-    m_controller = new FuzzyController();
-    m_startButton = new Button(startButtonPin, PULLUP);
-    //    m_led = new LED(indicatorLedPin);
+    m_fuzzyController = new FuzzyController();
+    pinMode(startButtonPin, INPUT_PULLUP);
+    pinMode(indicatorLedPin, OUTPUT);
+    digitalWrite(indicatorLedPin, LOW);
+
+    m_pidController = new PID(&m_input, &m_output, &m_setpoint, consKp, consKi, consKd, DIRECT);
+    m_pidController->SetOutputLimits(-m_linearSpeed, m_linearSpeed);
+    m_pidController->SetMode(AUTOMATIC);
+    m_motorDriver->setSpeed(0, 0);
 }
 
 void LineFollowerRobot::moveForward(const uint32_t& speed)
@@ -81,7 +95,8 @@ void LineFollowerRobot::readOdometry()
         m_lastPosition.theta -= TWOPI;
     }
 
-    Serial << "X = " << m_lastPosition.x << "\t Y = " << m_lastPosition.y << " THETA = " << m_lastPosition.theta << endl;
+    Serial << "X = " << m_lastPosition.x << "\t Y = " << m_lastPosition.y
+           << " THETA = " << m_lastPosition.theta << endl;
 }
 
 void LineFollowerRobot::scan()
@@ -100,7 +115,7 @@ void LineFollowerRobot::scan()
 
 bool LineFollowerRobot::closeToOrigin()
 {
-    //TODO: Check if position is close to origin
+    // TODO: Check if position is close to origin
     return false;
 }
 
@@ -112,14 +127,13 @@ void LineFollowerRobot::follow()
 void LineFollowerRobot::follow(float speed)
 {
     m_input = m_lineSensor->read(false);
-    m_output = m_controller->evaluate(m_input);
+    //m_output = m_fuzzyController->evaluate(m_input);
+    m_pidController->Compute();
 
-    int leftMotor = m_linearSpeed * (1 + m_output / 100);
-    int rightMotor = m_linearSpeed * (1 - m_output / 100);
+    int leftMotor = m_linearSpeed - m_output;
+    int rightMotor = m_linearSpeed + m_output;
+
     m_motorDriver->setSpeed(leftMotor, rightMotor);
-
-    Serial << "Input: " << m_input << "\t output: " << m_output << "\t Left: "
-           << leftMotor << "\t Right: " << rightMotor << endl;
 }
 
 void LineFollowerRobot::stop()

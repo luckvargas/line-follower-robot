@@ -20,7 +20,8 @@ HEADERS += \
     util/streaming.h \
     util/elapsedtimer.h \
     motordriver.h \
-    fuzzycontroller.h
+    fuzzycontroller.h \
+    config.h
 
 DISTFILES += \
     Makefile
@@ -54,4 +55,5 @@ $$HOME/Arduino/libraries/RoboClaw \
 $$HOME/Arduino/libraries/Fuzzy \
 $$HOME/Arduino/libraries/Button \
 $$HOME/Arduino/libraries/LED \
+$$HOME/Arduino/libraries/PID \
 $$HOME/Arduino/libraries/StandardCplusplus

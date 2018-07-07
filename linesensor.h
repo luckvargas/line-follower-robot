@@ -1,11 +1,8 @@
 #ifndef LINESENSOR_H
 #define LINESENSOR_H
 
+#include "config.h"
 #include <QTRSensors.h>
-
-#define NUM_SENSORS 6
-#define TIMEOUT 2500
-#define EMITTER_PIN 27
 
 class LineSensor {
 public:
@@ -22,6 +19,7 @@ private:
 
     ///< Constants
     unsigned char sensorPins[NUM_SENSORS] = { 14, 12, 32, 33, 25, 26 };
+    float map(float x, float in_min, float in_max, float out_min, float out_max);
 };
 
 #endif // LINESENSOR_H

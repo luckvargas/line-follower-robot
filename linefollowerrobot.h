@@ -1,6 +1,7 @@
 #ifndef LINEFOLLOWERROBOT_H
 #define LINEFOLLOWERROBOT_H
 
+#include "config.h"
 #include "util/util.h"
 #include <Arduino.h>
 #include <LED.h>
@@ -14,6 +15,7 @@ class Button;
 class LineSensor;
 class MotorDriver;
 class FuzzyController;
+class PID;
 
 struct Position {
     Position() {}
@@ -73,7 +75,8 @@ private:
     ///< Periferics
     MotorDriver* m_motorDriver;
     LineSensor* m_lineSensor;
-    FuzzyController* m_controller;
+    FuzzyController* m_fuzzyController;
+    PID* m_pidController;
     Button* m_startButton;
     ElapsedTimer m_timer;
 
@@ -81,12 +84,13 @@ private:
     bool m_calibrated;
 
     ///< Control variables
-    float m_input;
-    float m_output;
+    double m_input;
+    double m_output;
+    double m_setpoint = 0;
 
     ///< Speed parameters
     int m_maxSpeed;
-    float m_linearSpeed = 1200;
+    float m_linearSpeed = linearSpeed;
 
     ///< Odometry and Mapping
     std::vector<LaneSegment> m_lane;
@@ -94,8 +98,8 @@ private:
     Pair<uint32_t, uint32_t> m_lastEncoderRead;
 
     ///< Constraints
-    const uint8_t startButtonPin = 12;
-    const uint8_t indicatorLedPin = 13;
+    const uint8_t startButtonPin = 19;
+    const uint8_t indicatorLedPin = 15;
     const float distanceBetweenWheels = 100.0; // Distance between wheels - 10cm
     const float countsPerCentimeter = 100.0;
     const float scanSpeed = 1000.0;

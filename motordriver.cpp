@@ -17,7 +17,7 @@ MotorDriver::MotorDriver()
 
 void MotorDriver::setSpeed(const uint32_t& leftMotorSpeed, const uint32_t& rightMotorSpeed)
 {
-    m_roboclaw.SpeedM1(m_address, leftMotorSpeed);
+    m_roboclaw.SpeedM1(m_address, -leftMotorSpeed);
     m_roboclaw.SpeedM2(m_address, rightMotorSpeed);
 }
 

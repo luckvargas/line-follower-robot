@@ -12,6 +12,7 @@ public:
 private:
     void setup();
     Fuzzy m_fuzzy;
+    float m_lastInput;
 };
 
 #endif // FUZZYCONTROLLER_H
