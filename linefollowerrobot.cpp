@@ -18,6 +18,7 @@ void LineFollowerRobot::calibrate()
     uint32_t calibrationSpeed = 500;
     long calibrationTime = 1500;
 
+    Serial << "CALIBRANDO!!!" << endl;
     // Rotate robot and calibrate
     m_motorDriver->setSpeed(calibrationSpeed, -calibrationSpeed);
     m_timer.start();
@@ -34,18 +35,20 @@ void LineFollowerRobot::calibrate()
     m_motorDriver->setSpeed(0, 0);
 
     m_calibrated = true;
+    Serial << "CALIBROU!" << endl;
 }
 
 void LineFollowerRobot::waitButtonPress()
 {
-    Serial << "Waiting for button press... " << !digitalRead(19) << endl;
+    Serial << "Waiting for button press... " << endl;
     while (digitalRead(startButtonPin)) {
-        //        digitalWrite(indicatorLedPin, LOW);
-        //        delay(100);
-        //        digitalWrite(indicatorLedPin, HIGH);
-        //        delay(100);
+        digitalWrite(indicatorLedPin, LOW);
+        delay(100);
+        digitalWrite(indicatorLedPin, HIGH);
+        delay(100);
         // Serial << "APERTA PORRA: " << digitalRead(startButtonPin) << endl;
     }
+    Serial << "APERTOU!!!" << endl;
     delay(2000);
 }
 
@@ -58,10 +61,15 @@ void LineFollowerRobot::init()
     pinMode(indicatorLedPin, OUTPUT);
     digitalWrite(indicatorLedPin, LOW);
 
-    m_pidController = new PID(&m_input, &m_output, &m_setpoint, consKp, consKi, consKd, DIRECT);
-    m_pidController->SetOutputLimits(-m_linearSpeed, m_linearSpeed);
+    m_pidController = new PID(&m_input, &m_output, &m_setpoint, m_kp, m_ki, m_kd, DIRECT);
+    m_pidController->SetSampleTime(3);
     m_pidController->SetMode(AUTOMATIC);
     m_motorDriver->setSpeed(0, 0);
+}
+
+void LineFollowerRobot::updatePid()
+{
+    m_pidController->SetTunings(m_kp, m_ki, m_kd);
 }
 
 void LineFollowerRobot::moveForward(const uint32_t& speed)
@@ -72,6 +80,11 @@ void LineFollowerRobot::moveForward(const uint32_t& speed)
 void LineFollowerRobot::readLine()
 {
     m_lineSensor->read(true);
+}
+
+bool LineFollowerRobot::readStopSensor()
+{
+    return m_lineSensor->readStopSensor();
 }
 
 void LineFollowerRobot::readOdometry()
@@ -119,6 +132,65 @@ bool LineFollowerRobot::closeToOrigin()
     return false;
 }
 
+float LineFollowerRobot::linearSpeed()
+{
+    return m_linearSpeed;
+}
+
+float LineFollowerRobot::ki()
+{
+    return m_ki;
+}
+
+float LineFollowerRobot::kd()
+{
+    return m_kd;
+}
+
+float LineFollowerRobot::kp()
+{
+    return m_kp;
+}
+
+void LineFollowerRobot::incrementKi(float increment)
+{
+    m_ki += increment;
+    updatePid();
+}
+
+void LineFollowerRobot::incrementKp(float increment)
+{
+    m_kp += increment;
+    updatePid();
+}
+
+void LineFollowerRobot::incrementKd(float increment)
+{
+    m_kd += increment;
+    updatePid();
+}
+
+void LineFollowerRobot::incrementSpeed(float increment)
+{
+    Serial << "CURRENT SPEED: " << m_linearSpeed << "\t INCREMENT" << increment;
+    m_linearSpeed += increment;
+    m_pidController->SetOutputLimits(-m_linearSpeed * 10, m_linearSpeed * 10);
+}
+
+void LineFollowerRobot::setKi(float ki)
+{
+    m_ki = ki;
+}
+
+void LineFollowerRobot::setKp(float kp)
+{
+    m_kp = kp;
+}
+
+void LineFollowerRobot::setKd(float kd)
+{
+    m_kd = kd;
+}
 void LineFollowerRobot::follow()
 {
     this->follow(m_linearSpeed);
@@ -134,6 +206,9 @@ void LineFollowerRobot::follow(float speed)
     int rightMotor = m_linearSpeed + m_output;
 
     m_motorDriver->setSpeed(leftMotor, rightMotor);
+
+    //    Serial << "Input: " << m_input << "\t output: " << m_output << "\t Left: "
+    //           << leftMotor << "\t Right: " << rightMotor << endl;
 }
 
 void LineFollowerRobot::stop()
@@ -144,4 +219,5 @@ void LineFollowerRobot::stop()
 void LineFollowerRobot::setLinearSpeed(float linearSpeed)
 {
     m_linearSpeed = linearSpeed;
+    m_pidController->SetOutputLimits(-m_linearSpeed * 10, m_linearSpeed * 10);
 }

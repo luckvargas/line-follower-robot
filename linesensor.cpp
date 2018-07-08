@@ -4,6 +4,7 @@
 LineSensor::LineSensor()
 {
     m_qtrSensors = new QTRSensorsRC(sensorPins, NUM_SENSORS, TIMEOUT, EMITTER_PIN);
+    m_qtrSecondSensor = new QTRSensorsRC(SecondSensorPins, NUM_SECOND_SENSOR, SECOND_SENSOR_TIMEOUT);
 }
 
 float LineSensor::read(bool print)
@@ -26,9 +27,34 @@ float LineSensor::read(bool print)
     return position;
 }
 
+bool LineSensor::readStopSensor()
+{
+    unsigned int sensorValue = 0;
+    // Read raw sensor values
+    if (m_calibrated) {
+        m_qtrSecondSensor->readCalibrated(m_secondSensorValues);
+    } else {
+        m_qtrSecondSensor->read(m_secondSensorValues);
+    }
+
+    // print the sensor values as numbers from 0 to 2500, where 0 means maximum reflectance and
+    // 2500 means minimum reflectance
+
+    for (unsigned char i = 0; i < NUM_SECOND_SENSOR; i++) {
+        if (m_secondSensorValues[i] <= 500 && (millis() - m_readTime) > 200) {
+            Serial << "Stop Sensor true" << endl;
+            m_readTime = millis();
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void LineSensor::calibrate()
 {
     m_qtrSensors->calibrate();
+    m_qtrSecondSensor->calibrate();
     m_calibrated = true;
 }
 

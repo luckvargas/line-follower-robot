@@ -12,7 +12,9 @@ ifeq ($(PLATFORM), esp32)
         $(ARDUINO_LIBS_DIR)/Fuzzy \
         $(ARDUINO_LIBS_DIR)/RoboClaw \
         $(ARDUINO_LIBS_DIR)/QTRSensors \
-        $(ARDUINO_LIBS_DIR)/PID
+        $(ARDUINO_LIBS_DIR)/PID \
+        $(ESP_ROOT)/libraries/BluetoothSerial \
+        $(ESP_ROOT)/libraries/EEPROM
 
     include $(HOME)/makeEspArduino/makeEspArduino.mk
 else

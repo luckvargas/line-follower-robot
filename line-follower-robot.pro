@@ -10,7 +10,8 @@ SOURCES += line-follower-robot.ino \
     linefollowerrobot.cpp \
     linesensor.cpp \
     motordriver.cpp \
-    fuzzycontroller.cpp
+    fuzzycontroller.cpp \
+    cmdmessengercpp.cpp
 
 HEADERS += \
     linefollowerrobot.h \
@@ -21,7 +22,9 @@ HEADERS += \
     util/elapsedtimer.h \
     motordriver.h \
     fuzzycontroller.h \
-    config.h
+    config.h \
+    cmdmessenger.h \
+    cmdmessengercpp.h
 
 DISTFILES += \
     Makefile
@@ -44,16 +47,22 @@ INCLUDEPATH = $$HOME/arduino-1.8.5/hardware/arduino/avr/cores/arduino \
     $$HOME/arduino-1.8.5/libraries/Temboo/src \
     $$HOME/arduino-1.8.5/libraries/TFT/src \
     $$HOME/arduino-1.8.5/libraries/WiFi/src \
-    $$HOME/arduino-1.8.5/hardware/arduino/avr/libraries/EEPROM/src \
+#    $$HOME/arduino-1.8.5/hardware/arduino/avr/libraries/EEPROM/src \
     $$HOME/arduino-1.8.5/hardware/arduino/avr/libraries/SoftwareSerial/src \
     $$HOME/arduino-1.8.5/hardware/arduino/avr/libraries/SPI/src \
     $$HOME/arduino-1.8.5/hardware/arduino/avr/libraries/Wire/src
 
 ## 3rdParty Arduino Libraries
 INCLUDEPATH += $$HOME/Arduino/libraries/QTRSensors \
-$$HOME/Arduino/libraries/RoboClaw \
-$$HOME/Arduino/libraries/Fuzzy \
-$$HOME/Arduino/libraries/Button \
-$$HOME/Arduino/libraries/LED \
-$$HOME/Arduino/libraries/PID \
-$$HOME/Arduino/libraries/StandardCplusplus
+    $$HOME/Arduino/libraries/RoboClaw \
+    $$HOME/Arduino/libraries/Fuzzy \
+    $$HOME/Arduino/libraries/Button \
+    $$HOME/Arduino/libraries/LED \
+    $$HOME/Arduino/libraries/PID \
+    $$HOME/Arduino/libraries/StandardCplusplus
+
+# ESP Libraries
+INCLUDEPATH += \
+    $$HOME/Arduino/hardware/espressif/esp32/libraries/BluetoothSerial/src \
+    $$HOME/Arduino/hardware/espressif/esp32/libraries/EEPROM
+

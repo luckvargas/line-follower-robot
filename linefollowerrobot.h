@@ -4,7 +4,6 @@
 #include "config.h"
 #include "util/util.h"
 #include <Arduino.h>
-#include <LED.h>
 
 #ifdef __AVR__
 #include <StandardCplusplus.h>
@@ -16,6 +15,11 @@ class LineSensor;
 class MotorDriver;
 class FuzzyController;
 class PID;
+
+#define BYTE_KP 0
+#define BYTE_KI 5
+#define BYTE_KD 10
+#define BYTE_SPEED 15
 
 struct Position {
     Position() {}
@@ -53,6 +57,8 @@ public:
 
     void readLine();
 
+    bool readStopSensor();
+
     void readOdometry();
 
     void scan();
@@ -68,6 +74,27 @@ public:
     void waitButtonPress();
 
     void stop();
+
+    void setKp(float kp);
+
+    void setKd(float kd);
+
+    void setKi(float ki);
+
+    void incrementKp(float increment);
+    void incrementKd(float increment);
+    void incrementKi(float increment);
+    void incrementSpeed(float increment);
+
+    float kp();
+
+    float kd();
+
+    float ki();
+
+    float linearSpeed();
+
+    void updatePid();
 
 private:
     bool closeToOrigin();
@@ -90,7 +117,12 @@ private:
 
     ///< Speed parameters
     int m_maxSpeed;
-    float m_linearSpeed = linearSpeed;
+    float m_linearSpeed;
+
+    ///< Controler Values
+    float m_kp;
+    float m_kd;
+    float m_ki;
 
     ///< Odometry and Mapping
     std::vector<LaneSegment> m_lane;
